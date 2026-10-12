@@ -1,0 +1,25 @@
+# 生成的数据集（体积过大，不纳入版本管理）
+data/
+*.mat
+
+# 内部文档，不公开
+document/
+CLAUDE.md
+
+# MATLAB
+*.asv
+*.autosave
+*.slxc
+slprj/
+codegen/
+*.mex*
+
+# IDE
+.vscode/
+.idea/
+.agents/
+
+# 系统
+Thumbs.db
+.DS_Store
+desktop.ini
