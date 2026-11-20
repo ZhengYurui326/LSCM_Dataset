@@ -1,6 +1,6 @@
 %% AMC/SEI/DOA 三任务联合数据集生成脚本
 % 信号链路:
-% 调制基带 -> 发射机射频损伤 -> 瑞利衰落信道
+% 调制基带 -> 发射机射频损伤 -> Rician 衰落信道
 % -> UCA 阵列导向投影 -> 各阵元独立 AWGN -> 接收机射频损伤
 %
 % 输出字段固定为:
@@ -14,7 +14,7 @@ close all; clear; clc;
 
 addpath(genpath(pwd));
 
-dataset_filename = 'data/sei_mod_snr_doa_uca_rayleigh_compare.mat';
+dataset_filename = 'data/sei_mod_snr_doa_uca_rician.mat';
 num_emitters = 10;
 snr_values = -20:4:32;
 target_len = 128;
@@ -99,9 +99,9 @@ for e_idx = 1:num_emitters
                 tx_ideal = symbols;
             end
 
-            % 先完成单通道链路: TX 损伤 + 瑞利衰落。
+            % 先完成单通道链路: TX 损伤 + Rician 衰落。
             tx_signal = tx_impairments_v2(tx_ideal, txRF);
-            ch_signal = rayleigh_channel_compare(tx_signal, txRF, current_seed);
+            ch_signal = rician_channel_1(tx_signal, txRF, current_seed);
 
             % 将 181 个角度各重复 10 次后打乱，保证每个条件内角度分布均衡。
             doa_sequence_deg = build_doa_sequence(doa_grid_deg, doa_repeats_per_angle, current_seed);

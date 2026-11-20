@@ -1,8 +1,8 @@
 function y = rician_channel_1(x, txRF, seed, varargin)
-%RICIAN_CHANNEL_2  仅执行多径 Rician 衰落，不在内部注入噪声，主数据集使用的信道模型
+%RICIAN_CHANNEL_1  仅执行多径 Rician 衰落，不在内部注入噪声，主数据集使用的信道模型
 %
-%   y = rician_channel_2(x, txRF, seed)
-%   y = rician_channel_2(x, txRF, seed, snr)
+%   y = rician_channel_1(x, txRF, seed)
+%   y = rician_channel_1(x, txRF, seed, snr)
 %
 %   输入：
 %       x    : 输入基带信号（列向量或矩阵，每列一个通道）
@@ -20,11 +20,11 @@ function y = rician_channel_1(x, txRF, seed, varargin)
 %   4. 城市微蜂窝环境，7 路多径 Rician 衰落模型：
 %       pathDelays = [0, 30, 80, 130, 180, 250, 320] ns
 %       pathVariance = [0.55, 0.20, 0.12, 0.07, 0.04, 0.015, 0.005]
-%   5. Rician K = 2, Jakes 多普勒谱, 最大多普勒 30 Hz
+%   5. Rician K = 2, Jakes 多普勒谱, 最大多普勒 50 Hz
 %   6. 每次调用都会重新创建信道对象，使当前 seed 和 SampleRate 生效。
 
     if nargin < 3
-        error('rician_channel_2 requires at least x, txRF, and seed.');
+        error('rician_channel_1 requires at least x, txRF, and seed.');
     end
 
     if nargin >= 4
@@ -43,7 +43,7 @@ function y = rician_channel_1(x, txRF, seed, varargin)
         AveragePathGains     = pathGains_dB, ...
         KFactor              = 2, ...
         DopplerSpectrum      = doppler("Jakes"), ...
-        MaximumDopplerShift  = 30, ...
+        MaximumDopplerShift  = 50, ...
         NormalizePathGains   = true, ...
         RandomStream         = "mt19937ar with seed", ...
         Seed                 = seed);
